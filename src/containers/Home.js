@@ -1,23 +1,20 @@
+import Form from './Form'
 import LoginForm from './LoginForm'
 import SignUpForm from './SignUpForm'
-export default function Home({ pages ,setUser}) {
+export default function Home({ pages, setUser }) {
+    //  switch (pages) {
+    //      case 'sign in':
+    //          return (
+    //                  <LoginForm setUser={setUser} />
+    //          )
+    //      case 'sign upp':
+    //          return (
+    //                  <SignUpForm setUser={setUser} />
+    //          )
 
-    switch (pages) {
-        case 'sign in':
-            return (
-            <LoginForm setUser={setUser}/>
-            )
-            break;
-        case 'sign upp':
-            return (
-            <SignUpForm />
-            )
+    //      default:
 
-            break;
-        default:
-            return (
-                <h1>Please login ! </h1>
-            )
-            break;
-    }
+    return (
+        <h1>Please login ! </h1>
+    )
 }

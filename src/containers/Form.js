@@ -3,7 +3,6 @@ import { useState, useEffect } from 'react'
 
 //firebase 
 import {auth, db, updateDoc,doc} from '../utils/firebase'
-
 export default function Form() {
     const [inputText, setInputText] = useState('')
     const [todos, setTodos] = useState([]);
@@ -13,10 +12,9 @@ export default function Form() {
         setInputText(e.target.value)
 
     }
-    const currentUser = auth.currentUser
-
     useEffect(() => {
-        const ref= updateDoc(doc(db,'users',currentUser.uid),{
+        const currentUser = auth.currentUser
+        updateDoc(doc(db,'users',currentUser.uid),{
             myTodos: todos
         })
 

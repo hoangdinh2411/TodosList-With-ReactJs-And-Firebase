@@ -1,8 +1,17 @@
 import { useState } from 'react'
 import Button from '../components/Button/Button'
-import { db, auth, createUserWithEmailAndPassword, doc, setDoc, updateProfile } from '../utils/firebase'
+import {
+    db,
+    auth,
+    createUserWithEmailAndPassword,
+    doc,
+    setDoc
+} from '../utils/firebase'
+import { useNavigate } from 'react-router-dom'
 
-export default function SignUpForm() {
+
+export default function SignUpForm({ setUser }) {
+    let navigate = useNavigate();
 
     const isEmpty = () => {
         setUserName('')
@@ -27,25 +36,23 @@ export default function SignUpForm() {
                 .then(res => res.user
                 )
                 .then(data => {
-                    updateProfile(auth.currentUser, {
-                        displayName: userName
-                    });
-
+                    setUser(data)
                     setDoc(doc(db, 'users', data.uid), {
                         userInfo: {
                             userId: data.uid,
-                            name: userName,
+                            name: '',
                             email: data.email
                         },
 
                     })
+                    navigate("../todos", { replace: true });
+
                 })
 
                 .catch(error => {
                     setErrMessage('Something wrong. Please enter again!')
                     isEmpty()
                 })
-            setErrMessage('')
         }
 
 
@@ -58,11 +65,11 @@ export default function SignUpForm() {
             </div>
             <div className="input-boxes" >
                 Enter email:
-                <input type="text" className="todo-input" value={email} onChange={(e) => setEmail(e.target.value)} />
+                <input type="email" className="todo-input" value={email} onChange={(e) => setEmail(e.target.value)} />
             </div>
             <div className="input-boxes">
                 Enter password:
-                <input type="text" className="todo-input" value={password} onChange={(e) => setPassword(e.target.value)} />
+                <input type="password" className="todo-input" value={password} onChange={(e) => setPassword(e.target.value)} />
             </div>
             {
                 errMessage &&

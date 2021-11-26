@@ -1,10 +1,7 @@
-import {useContext} from 'react'
-import { UserContext } from '../../API/Context'
-export default function UserDetails() {
-    const currentUser = useContext(UserContext)
+export default function UserDetails({user}) {
     return (
         <div className="home">
-            <h1>Hello, <span>{currentUser.displayName}</span></h1>
+            <h1>Hello, <span>{user.email}</span></h1>
         </div>
     )
 }

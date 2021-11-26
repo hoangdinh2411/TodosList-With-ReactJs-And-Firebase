@@ -1,4 +1,3 @@
-import { useState } from 'react'
 
 export default function Todo({todos, todo, setTodos}){
     const deleteHandler = () =>{

@@ -1,20 +1,22 @@
-import { useState , useEffect } from 'react'
+import { useState } from 'react'
 import { auth, signInWithEmailAndPassword } from '../utils/firebase'
-
+import Button from '../components/Button/Button'
+import {  useNavigate } from 'react-router-dom'
 export default function LoginForm({ setUser }) {
-
+    let navigate = useNavigate();
     const [loginInfo, setLoginInfo] = useState({
         emailInput: '',
         passwordInput: '',
         errorMessage: null
     })
-   
+
     const handleSignIn = (e) => {
         e.preventDefault()
-         signInWithEmailAndPassword(auth, loginInfo.emailInput, loginInfo.passwordInput)
+        signInWithEmailAndPassword(auth, loginInfo.emailInput, loginInfo.passwordInput)
             .then(userCredential => {
                 const user = userCredential.user
                 setUser(user.email)
+                navigate("../todos", { replace: true });
             })
             .catch(error => {
                 const errorMessage = error.message
@@ -46,9 +48,7 @@ export default function LoginForm({ setUser }) {
                 <span>{loginInfo.errorMessage}</span>
             }
             <div className="input-boxes">
-                <button className="todo-button" type="submit" onClick={handleSignIn}>
-                    Login
-                </button>
+                <Button title='Sign In' type="submit" onHandlerClick={handleSignIn} />
             </div>
         </form>
     )
